@@ -8,6 +8,14 @@
 // for convenience
 using json = nlohmann::json;
 using namespace std;
+
+
+#define KP 0.37
+
+#define KI 0.001
+
+#define KD 0.65
+
 // For converting back and forth between radians and degrees.
 constexpr double pi() { return M_PI; }
 double deg2rad(double x) { return x * pi() / 180; }
@@ -37,9 +45,8 @@ int main()
 
   old = std::chrono::system_clock::now();
   PID pid;
-  // TODO: Initialize the pid variable.
-  pid.Init(0.37, 0.000, 0.65); //PID vals as input;
-  //pid.Init(0.37, 0.009, 0.65);
+
+  pid.Init(KP, KI, KD);
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
